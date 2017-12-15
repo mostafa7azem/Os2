@@ -6,7 +6,7 @@ import pickle
 import ast
 class my_main_server (threading.Thread):
    s = socket.socket()
-   dic={}
+   dic=[]
    def __init__(self):
         threading.Thread.__init__(self)  # Create a socket object
         host = socket.gethostname()  # Get local machine name
@@ -21,12 +21,15 @@ class my_main_server (threading.Thread):
            x=pickle.loads(c.recv(1024))
            if x=="adding_file":
                recived=ast.literal_eval(pickle.loads(c.recv(1024)))
-               self.dic[recived[1]] = recived[0]
+               self.dic.append(recived)
                print(self.dic)
                c.close()
            if x=="searching_files":
-               print("hi")
                recived = pickle.loads(c.recv(1024))
-               print(recived)
-               print([key for key, value in self.dic.items() if value == recived])
+               search=[]
+               for  item in self.dic:
+                   if item[0]==recived:
+                       search.append(item[1])
+               c.send(pickle.dumps(search))
+               c.close()
 
