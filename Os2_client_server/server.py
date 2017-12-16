@@ -10,19 +10,16 @@ class my_server (threading.Thread):
         self.s.listen(5)  # Now wait for client connection.
         self.name = self.s.getsockname()[1]
    def run(self):
-       while True:
-           c, addr = self.s.accept()
-           print('Got connection from', addr)
-           c.send('Thank you for connecting')
-           filename = pickle.loads(c.recv(1024))
-           f = open(filename, 'rb')
-           l = f.read(1024)
-           while (l):
-               c.send(l)
-               print('Sent ', repr(l))
-               l = f.read(1024)
-           f.close()
-
-           print('Done sending')
-           c.send('Thank you for connecting')
-           c.close()
+        while True:
+             c, addr = self.s.accept()
+             print('Got connection from', addr)
+             filename = pickle.loads(c.recv(1024))
+             f = open(filename, 'rb')
+             l = f.read(1024)
+             while (l):
+                 c.send(l)
+                 print('Sent ', repr(l))
+                 l = f.read(1024)
+             f.close()
+             print('Done sending')
+             c.close()

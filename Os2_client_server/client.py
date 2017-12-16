@@ -31,8 +31,7 @@ class client ():
                    host = socket.gethostname()  # Get local machine name
                    port = port_no # Reserve a port for your service.
 
-                   C.connect((host, port))
-                   C.send("Hello server!")
+                   C.connect((host,int(port)))
                    with open(filename, 'wb') as f:
                        print('file opened')
                        while True:
@@ -45,7 +44,6 @@ class client ():
                            f.write(data)
 
                    f.close()
-                   print('Successfully get the file')
                    C.close()
                    s.close()
                else:
