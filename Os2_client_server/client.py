@@ -1,11 +1,12 @@
 import socket
 import pickle
+import sys
 class client ():
    def __init__(self,name):
        print("welcome \n")
        print("you are now connected to server \n")
        while True:
-           print("press 1 for adding a new file 2  for searching a file 3 for exit ")
+           print("press 1 for adding a new file 2  for searching a file")
            x=input()
            if x=='1':
                s = socket.socket()
@@ -33,24 +34,18 @@ class client ():
 
                    C.connect((host,int(port)))
                    with open(filename, 'wb') as f:
-                       print('file opened')
                        while True:
-                           print('receiving data...')
                            data = C.recv(1024)
-                           print('data=%s', (data))
                            if not data:
                                break
                            # write data to a file
                            f.write(data)
-
+                   print('file reicivied')
                    f.close()
                    C.close()
                    s.close()
                else:
                     print('thanks for using my program')
                     s.close()
-           else:
-               break
-       s.close()
 
 

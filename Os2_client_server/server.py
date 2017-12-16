@@ -12,13 +12,11 @@ class my_server (threading.Thread):
    def run(self):
         while True:
              c, addr = self.s.accept()
-             print('Got connection from', addr)
              filename = pickle.loads(c.recv(1024))
              f = open(filename, 'rb')
              l = f.read(1024)
              while (l):
                  c.send(l)
-                 print('Sent ', repr(l))
                  l = f.read(1024)
              f.close()
              print('Done sending')
